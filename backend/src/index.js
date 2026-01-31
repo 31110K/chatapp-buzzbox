@@ -12,7 +12,7 @@ import { app, server } from "./lib/socket.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
-const __dirname = path.resolve();
+const __dirname = path.resolve(".");
 
 // Middleware
 app.use(express.json());
@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://buzzbox-iatr.onrender.com"
+      "https://buzzbox-iatr.onrender.com",
     ],
     credentials: true,
   })
@@ -32,10 +32,10 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend (always)
-app.use(express.static(path.join(__dirname, "frontend/dist")));
+// Serve frontend build
+app.use(express.static(path.join(__dirname, "frontend", "dist")));
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
