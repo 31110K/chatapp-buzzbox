@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://buzzbox-iatr.onrender.com",
+      "https://buzzbox-iatr.onrender.com"
     ],
     credentials: true,
   })
@@ -32,7 +32,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend build
+// Serve frontend
 app.use(express.static(path.join(__dirname, "frontend", "dist")));
 
 app.get("/*", (req, res) => {
