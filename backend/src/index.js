@@ -32,12 +32,12 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend build
+// Serve frontend
 const frontendPath = path.join(__dirname, "frontend", "dist");
-
 app.use(express.static(frontendPath));
 
-app.get("/*", (req, res) => {
+// ✅ correct wildcard route (NO path-to-regexp crash)
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
