@@ -12,8 +12,6 @@ import { app, server } from "./lib/socket.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
-
-// THIS is the important fix
 const __dirname = path.resolve();
 
 // Middleware
@@ -34,16 +32,14 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Serve frontend
+// Serve frontend build
 const frontendPath = path.join(__dirname, "frontend", "dist");
+
 app.use(express.static(frontendPath));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
-
-console.log("Serving frontend from:", frontendPath);
-
 
 // Start server
 server.listen(PORT, () => {
